@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
@@ -217,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
 
 //bai 3
         String a = "2021-11-20";
-        String b = "2021-12-15";
+        String b = "2025-12-15";
         Date datea = null;
         Date dateb = null;
         try {
@@ -243,7 +244,23 @@ public class MainActivity extends AppCompatActivity {
 
         long difference_ms = Math.abs(datea.getTime() - dateb.getTime());
         Log.d("BAI4-Date", "so ngay giua a va b :" + Math.round(difference_ms / ONE_DAY));
-        
+
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            long monthsBetween = ChronoUnit.MONTHS.between(
+                    LocalDate.parse(a).withDayOfMonth(1),
+                    LocalDate.parse(b).withDayOfMonth(1));
+            Log.d("BAI4-Date", "so thang giua a va b la: " + monthsBetween);
+
+            long yearsBetween = ChronoUnit.YEARS.between(
+                    LocalDate.parse(a),
+                    LocalDate.parse(b));
+            Log.d("BAI4-Date", "so nam giua a va b la: " + yearsBetween);
+        }
+
+
+
 
 //bai 5
         String date5 = "2019/10/16 09:29:40";
