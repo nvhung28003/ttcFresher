@@ -7,11 +7,14 @@ import android.icu.util.LocaleData;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Chronometer;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -220,14 +223,14 @@ public class MainActivity extends AppCompatActivity {
         try {
             datea = new SimpleDateFormat("yyyy-MM-dd").parse(a);
             dateb = new SimpleDateFormat("yyyy-MM-dd").parse(b);
-            Log.d("BAI2-Date", datea.toString());
-            Log.d("BAI2-Date", dateb.toString());
+            Log.d("BAI3-Date", datea.toString());
+            Log.d("BAI3-Date", dateb.toString());
             if (datea.compareTo(dateb) > 0) {
-                Log.d("BAI2-Date", "ngay a lon hon ngay b");
+                Log.d("BAI3-Date", "ngay a lon hon ngay b");
             } else if (datea.compareTo(dateb) == 0) {
-                Log.d("BAI2-Date", "ngay a bang ngay b");
+                Log.d("BAI3-Date", "ngay a bang ngay b");
             } else {
-                Log.d("BAI2-Date", "ngay a nho hon ngay b");
+                Log.d("BAI3-Date", "ngay a nho hon ngay b");
             }
 
         } catch (ParseException e) {
@@ -237,8 +240,10 @@ public class MainActivity extends AppCompatActivity {
         // bai 4
 
         long ONE_DAY = 1000 * 60 * 60 * 24;
+
         long difference_ms = Math.abs(datea.getTime() - dateb.getTime());
-        Log.d("BAI3-Date", "so ngay giua a va b :" + Math.round(difference_ms / ONE_DAY));
+        Log.d("BAI4-Date", "so ngay giua a va b :" + Math.round(difference_ms / ONE_DAY));
+        
 
 //bai 5
         String date5 = "2019/10/16 09:29:40";
