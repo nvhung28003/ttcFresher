@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -58,15 +59,17 @@ public class MainActivity extends AppCompatActivity {
         }
 //bai3
         billList.add(new Bill(0, "muaxe", 10000, "2019-9-11"));
-        billList.add(new Bill(0, "muanha", 90000, "2019-3-10"));
-        billList.add(new Bill(0, "muadoan", 2000000, "2018-4-11"));
-        billList.add(new Bill(0, "muathucuong", 15022200, "2019-9-11"));
-        billList.add(new Bill(0, "mualinhtinh", 2000, "2019-5-5"));
-
+        billList.add(new Bill(1, "muanha", 90000, "2019-3-10"));
+        billList.add(new Bill(2, "muadoan", 2000000, "2018-4-11"));
+        billList.add(new Bill(3, "muathucuong", 15022200, "2019-9-11"));
+        billList.add(new Bill(4, "mualinhtinh", 2000, "2019-5-5"));
+        billList.add(new Bill(4, "mualinhtinh", 20000, "2019-5-6"));
+        billList.add(new Bill(4, "xxx", 20000, "2019-5-6"));
         Bai3TangDanMoney bai3TangDanMoney = new Bai3TangDanMoney();
         bai3TangDanMoney.SapXepTangDanMoney(billList);
 
         for (int i = 0; i < billList.size(); i++) {
+            Log.d("BAI3", billList.get(i).getName() + "");
             Log.d("BAI3", billList.get(i).getMoney() + "");
         }
 //bai4
@@ -90,15 +93,46 @@ public class MainActivity extends AppCompatActivity {
         }
 
 //bai 6
-//        List<Bill> list1 = new ArrayList<>();
-//        HashMap<String, List<Bill>> hashMap = new HashMap<>();
-//        for (int i = 0; i < billList.size(); i++) {
-//            for(int j = i;j< billList.size();j++)
-//            {
-//
-//            }
-//            hashMap.put(billList.get(i).getDate(), list1.add(billList.get(i)));
-//        }
+
+        HashMap<String, List<Bill>> hashMap = new HashMap<>();
+
+      for(int i =billList.size()-1;i >=0;i--)
+      {
+
+          List<Bill> cacbilltrungngays = new ArrayList<>();
+          for(int j=i;j<billList.size();j++)
+          {
+              if(billList.get(i).getDate().equals(billList.get(j).getDate()))
+              {
+                  cacbilltrungngays.add(billList.get(j));
+              }
+          }
+       hashMap.put(billList.get(i).getDate(),cacbilltrungngays);
+      }
+//bai 7
+      List<Bill> cacbilltrungngay = new ArrayList<>();
+    cacbilltrungngay.addAll(hashMap.get("2019-9-11"));
+
+      for(int i=0;i<cacbilltrungngay.size();i++)
+      {
+          Log.d("BAI7", cacbilltrungngay.get(i).getName());
+          Log.d("BAI7", cacbilltrungngay.get(i).getDate());
+      }
+//bai 8
+        Set<Bill> billHashSet= new HashSet<>();
+      for(int i=0;i<billList.size();i++)
+      {
+          billHashSet.add(billList.get(i));
+      }
+      List<Bill> listbillkhongtrung= new ArrayList<>(billHashSet);
+      for(int i=0;i<listbillkhongtrung.size();i++)
+      {
+          Log.d("BAI8", listbillkhongtrung.get(i).getName());
+          Log.d("BAI8", listbillkhongtrung.get(i).getId() + "");
+          Log.d("BAI8", listbillkhongtrung.get(i).getMoney() + "");
+      }
+
+    ;
 
 //bai tap ve string
 
@@ -259,13 +293,10 @@ public class MainActivity extends AppCompatActivity {
             String dinhdangngaykhac1 = format7khac.format(datebai7);
             Log.d("BAI7-Date", dinhdangngaykhac);
             Log.d("BAI7-Date", dinhdangngaykhac1);
-
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
     }
-
     private void DemSoLanXuatHienKyTuTrongChuoi(String chuoi, String kytu) {
         int dautien = -1;
         int cuoicung = 0;
