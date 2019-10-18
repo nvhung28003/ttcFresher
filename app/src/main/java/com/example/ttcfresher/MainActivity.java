@@ -36,23 +36,22 @@ import java.util.stream.Collectors;
 
 
 public class MainActivity extends AppCompatActivity {
-    private List<Integer> list = new ArrayList<>();
+    private List<Integer> listNumber = new ArrayList<>();
     private List<Bill> billList = new ArrayList<>();
-    private CacHoaDon cacHoaDon;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        cacHoaDon = new CacHoaDon();
-        list.add(2);
-        list.add(1);
-        list.add(5);
-        list.add(7);
-        list.add(10);
-        list.add(15);
-        list.add(20);
+
+        listNumber.add(2);
+        listNumber.add(1);
+        listNumber.add(5);
+        listNumber.add(7);
+        listNumber.add(10);
+        listNumber.add(15);
+        listNumber.add(20);
 
         billList.add(new Bill(0, "muaxe", 10000, "2019-9-11"));
         billList.add(new Bill(1, "muanha", 90000, "2019-3-10"));
@@ -63,68 +62,56 @@ public class MainActivity extends AppCompatActivity {
         billList.add(new Bill(4, "xxx", 20000, "2019-5-6"));
 
 //bai1
-        Bai1TinhTong tinhTong = new Bai1TinhTong();
-        Log.d("BAI1", tinhTong.Sum(10) + "");
+        sumFrom0toN(20);
+
 //bai2
-
-        Bai2SapXepTangDan bai2SapXepTangDan = new Bai2SapXepTangDan();
-        bai2SapXepTangDan.SapXepTangDan(list);
-
-        for (int i = 0; i < list.size(); i++) {
-            Log.d("BAI2", list.get(i).toString());
+        sortAscending(listNumber);
+        for (int i = 0; i < listNumber.size(); i++) {
+            Log.d("BAI2", listNumber.get(i).toString());
         }
 //bai3
 
-        Bai3TangDanMoney bai3TangDanMoney = new Bai3TangDanMoney();
-        bai3TangDanMoney.SapXepTangDanMoney(billList);
-
+        moneySortAscending(billList);
         for (int i = 0; i < billList.size(); i++) {
             Log.d("BAI3", billList.get(i).getName() + "");
             Log.d("BAI3", billList.get(i).getMoney() + "");
         }
 //bai4
 
-
-        Log.d("BAI4", "Cac ngay lap hoa don la :");
-
-        List<String> CacNgayLapHoaDon = new ArrayList<>();
-        CacNgayLapHoaDon = cacHoaDon.DistinctNgayLapHoaDon(billList);
-
-        for (int i = 0; i < CacNgayLapHoaDon.size(); i++) {
-            Log.d("BAI4", CacNgayLapHoaDon.get(i).toString());
-        }
+        List<String> listDistinctDateBill = new ArrayList<>();
+        listDistinctDateBill = getListDistinctDateBill(billList);
 
 //bai5
-        Log.d("BAI5", "Cac hoa don tren 1000000 :");
-        List<Bill> ListCacHoaDonTren1000000 = new ArrayList<>();
-        ListCacHoaDonTren1000000 = cacHoaDon.CacHoaDonTren1000000(billList);
+        Log.d("BAI5", "bills >  1000000 :");
+        List<Bill> listBillMoneyGreaterThanNumber = new ArrayList<>();
+        listBillMoneyGreaterThanNumber = getListBillMoneyGreaterThanNumber(billList,1000000);
 
-        for (int i = 0; i < ListCacHoaDonTren1000000.size(); i++) {
-            Log.d("BAI5", ListCacHoaDonTren1000000.get(i).getName());
+        for (int i = 0; i < listBillMoneyGreaterThanNumber.size(); i++) {
+            Log.d("BAI5", listBillMoneyGreaterThanNumber.get(i).getName());
         }
 
 //bai 6
         HashMap<String, List<Bill>> hashMap = new HashMap<>();
-        hashMap = cacHoaDon.ListHoaDonCungNgay(billList);
+        hashMap = inputListBillSameDay(billList);
 
 //bai 7
-        XuatCacBillTrungNgay(hashMap, "2019-5-6");
+        getListBillSameDay(hashMap, "2019-5-6");
 //bai 8
 
-        List<Bill> ListBillKhongTrungIDVaName = new ArrayList<>();
-        ListBillKhongTrungIDVaName = cacHoaDon.DistinctCacBillCungIdVaName(billList);
-        for (int i = 0; i < ListBillKhongTrungIDVaName.size(); i++) {
-            Log.d("BAI8", ListBillKhongTrungIDVaName.get(i).getName());
-            Log.d("BAI8", ListBillKhongTrungIDVaName.get(i).getId() + "");
+        List<Bill> listBillDistinctIDAndName = new ArrayList<>();
+        listBillDistinctIDAndName = getListBillDistinctIDAndName(billList);
+        for (int i = 0; i < listBillDistinctIDAndName.size(); i++) {
+            Log.d("BAI8", listBillDistinctIDAndName.get(i).getName());
+            Log.d("BAI8", listBillDistinctIDAndName.get(i).getId() + "");
         }
         ;
 
 //bai tap ve string
 
 //bai 1
-        DemSoLanXuatHienKyTuTrongChuoi("thiennhien123", "n");
+        countCharactersAppear("thiennhien123", "n");
 //bai 2
-        TimKyTuXuatHienNhieuNhatTrongChuoi("thienn");
+        findCharacterAppearTheMost("thienn");
 //bai 3
         List<String> stringList = new ArrayList<>();
         stringList.add("con gio");
@@ -133,167 +120,167 @@ public class MainActivity extends AppCompatActivity {
         stringList.add("no dang o noi dau");
 
 
-        String ChuoiGhepLai = GhepCacTuTrongListThanhChuoi(stringList);
+        String textCombined = combineWords(stringList);
 
-        Log.d("BAI3-String", ChuoiGhepLai + "");
+        Log.d("BAI3-String", textCombined + "");
 //bai 4
-        List<String> ListCacTu = new ArrayList<>();
-        ListCacTu = ListCacTuTrongChuoi(ChuoiGhepLai);
+        List<String> listTexts = new ArrayList<>();
+        listTexts = getListTextFromInPutText(textCombined);
 
-        for (int i = 0; i < ListCacTu.size(); i++) {
-            Log.d("BAI4-String", ListCacTu.get(i).toString() + "");
+        for (int i = 0; i < listTexts.size(); i++) {
+            Log.d("BAI4-String", listTexts.get(i).toString() + "");
         }
 //bai 5
-        Bai5String("I am fresher ,rightttt, yep , fresher la fresher hay la senior ?", "fresher", "senior");
+        replaceText("I am fresher ,rightttt, yep , fresher la fresher hay la senior ?", "fresher", "senior");
 
 //bai tap ve date va simpledateformat
 
 //bai 1
         String c = "2019-10-15 09:08:07";
-        Date date = ChuyenStringVeDangJaVaDate(c);
+        Date date = covertStringToDate(c);
 //bai 2
-        String NgayDauTienCuaThangs = NgayDauTienCuaThang(c);
-        Log.d("BAI2-Date", "Ngay dau tien cua thang: "+ NgayDauTienCuaThangs + "");
+        String fisrtDayOfMonth = getFisrtDayOfMonth(c);
+        Log.d("BAI2-Date", "Fist day of month : " + fisrtDayOfMonth + "");
 
-        String NgayCuoiCungCuaThangs = NgayCuoiCungCuaThang(c);
+        String lastDayofMonth = getLastDayOfMonth(c);
 
-        Log.d("BAI2-Date", "Ngay cuoi cung cua thang: " + NgayCuoiCungCuaThangs);
+        Log.d("BAI2-Date", "Last day of month : " + lastDayofMonth);
 
-        String MotTramNgaySaus = MotTramNgaySau(c);
+        String oneHundredDayLater = numberDayLater(c,100);
 
-        Log.d("BAI2-Date", "Mot tram ngay sau: " + MotTramNgaySaus);
+        Log.d("BAI2-Date", "100 days later : " + oneHundredDayLater);
 
 //bai 3
         String a = "2021-11-20";
         String b = "2025-12-15";
-        String ketquasosanh =SoSanhNgay(a,b);
-        Log.d("BAI3-Date", ketquasosanh);
+        String resultCompare = compareDate(a, b);
+        Log.d("BAI3-Date", resultCompare);
 
         // bai 4
 
-        CountNgay(a,b);
-        CountThang(a,b);
-        CountNam(a,b);
+        countDay(a, b);
+        countMonth(a, b);
+        countYear(a, b);
 
 
 //bai 5
-        String date5 = "2019/10/18 10:57:20" ;
-        ChuyenStringVeTimestamp(date5);
+        String date5 = "2019/10/18 10:57:20";
+        covertToTimestamp(date5);
 
 //bai 6
-        ChuyenStringVeTimestampVaLamTron(date5);
+        convertToTimestampRoundToMinutes(date5);
 
 
 //bai 7
         String date7 = "2019/10/16 10:33:40";
-        ChuyenDinhDangDate(date7);
+        covertFormatDate(date7);
     }
 
-    private void DemSoLanXuatHienKyTuTrongChuoi(String chuoi, String kytu) {
-        int dautien = -1;
-        int cuoicung = 0;
-        int dem = 0;
-        for (int i = 0; i <= chuoi.length() - kytu.length(); i++) {
-            if (kytu.equals(chuoi.substring(i, i + kytu.length()))) {
-                dem++;
-                Log.d("BAI1-String", "vi tri xuat hien trong chuoi la: " + i);
-                if (dautien == -1) {
-                    dautien = i;
+    private void countCharactersAppear(String inputText, String character) {
+        int positionAppearsFirst = -1;
+        int positionAppearsLast = 0;
+        int countAppear = 0;
+        for (int i = 0; i <= inputText.length() - character.length(); i++) {
+            if (character.equals(inputText.substring(i, i + character.length()))) {
+                countAppear++;
+                Log.d("BAI1-String", "position of Character: " + i);
+                if (positionAppearsFirst == -1) {
+                    positionAppearsFirst = i;
                 }
-                if (i > cuoicung) {
-                    cuoicung = i;
+                if (i > positionAppearsLast) {
+                    positionAppearsLast = i;
                 }
             }
         }
-        if (dem > 0) {
-            Log.d("BAI1-String", "so lan  xuat hien trong chuoi:" + dem);
+        if (countAppear > 0) {
+            Log.d("BAI1-String", "the number of appear:" + countAppear);
 //            Log.d("BAI1-String", "ky tu dau tien cua chuoi la:" +chuoi.substring(0,1));
 //            Log.d("BAI1-String", "ky tu cuoi cung cua chuoi la:" +chuoi.substring(chuoi.length()-1));
-            Log.d("BAI1-String", "vi tri dau tien xuat hien la:" + dautien);
-            Log.d("BAI1-String", "vi tri cuoi cung xuat hien la:" + cuoicung);
+            Log.d("BAI1-String", "position Appear fisrt:" + positionAppearsFirst);
+            Log.d("BAI1-String", "position Appear last:" + positionAppearsLast);
         } else {
-            Log.d("BAI1-String", "khong co ky tu hoac chuoi nao xuat hien trong chuoi");
+            Log.d("BAI1-String", "no Appear in Text" );
         }
 
     }
 
-    private void TimKyTuXuatHienNhieuNhatTrongChuoi(String chuoi) {
+    private void findCharacterAppearTheMost(String inputText) {
 
-        int solanxuathien = 0;
-        for (int i = 0; i < chuoi.length(); i++) {
-            int dem = 0;
-            for (int j = i; j < chuoi.length(); j++) {
-                if (chuoi.charAt(i) == chuoi.charAt(j)) {
-                    dem++;
+        int mostAppear = 0;
+        for (int i = 0; i < inputText.length(); i++) {
+            int count =0;
+            for (int j = i; j < inputText.length(); j++) {
+                if (inputText.charAt(i) == inputText.charAt(j)) {
+                    count++;
                 }
             }
-            if (dem > solanxuathien) {
-                solanxuathien = dem;
+            if (count > mostAppear) {
+                mostAppear = count;
             }
         }
 
-        for (int i = 0; i < chuoi.length(); i++) {
-            int demlai = 0;
-            for (int j = i; j < chuoi.length(); j++) {
-                if (chuoi.charAt(i) == chuoi.charAt(j)) {
-                    demlai++;
+        for (int i = 0; i < inputText.length(); i++) {
+            int countAgain = 0;
+            for (int j = i; j < inputText.length(); j++) {
+                if (inputText.charAt(i) == inputText.charAt(j)) {
+                    countAgain++;
                 }
             }
-            if (demlai == solanxuathien) {
-                Log.d("BAI2-String", "ky tu xuat hien nhieu nhat trong chuoi la: " + chuoi.charAt(i));
+            if (countAgain == mostAppear) {
+                Log.d("BAI2-String", "Most characters appear in the text : " + inputText.charAt(i));
             }
         }
-        List<String> chuoicons = new ArrayList<>();
-        for (int i = 0; i < chuoi.length(); i++) {
-            for (int j = i; j <= chuoi.length(); j++) {
-                if (chuoi.substring(i, j).equals(chuoi) == false) {
-                    if (chuoicons.size() == 0) {
+            List<String> subText = new ArrayList<>();
+        for (int i = 0; i < inputText.length(); i++) {
+            for (int j = i; j <= inputText.length(); j++) {
+                if (inputText.substring(i, j).equals(inputText) == false) {
+                    if (subText.size() == 0) {
 
-                        chuoicons.add(chuoi.substring(i, j));
+                        subText.add(inputText.substring(i, j));
                     } else {
                         int dem = 0;
-                        for (int k = 0; k < chuoicons.size(); k++) {
+                        for (int k = 0; k < subText.size(); k++) {
 
-                            if (chuoi.substring(i, j).equals(chuoicons.get(k)) == true) {
+                            if (inputText.substring(i, j).equals(subText.get(k)) == true) {
                                 dem++;
                             }
                         }
                         if (dem == 0) {
-                            chuoicons.add(chuoi.substring(i, j));
+                            subText.add(inputText.substring(i, j));
                         }
                     }
                 }
             }
         }
 
-        for (int i = 0; i < chuoicons.size(); i++) {
-            Log.d("BAI2-String", chuoicons.get(i).toString());
+        for (int i = 0; i < subText.size(); i++) {
+            Log.d("BAI2-String", subText.get(i).toString());
         }
     }
 
-    private String GhepCacTuTrongListThanhChuoi(List<String> stringList) {
+    private String combineWords(List<String> stringList) {
 
-        String ChuoiGhepLai = "";
+        String text = "";
         for (int i = 0; i < stringList.size(); i++) {
-            ChuoiGhepLai += stringList.get(i).toString();
+            text += stringList.get(i).toString();
             if (i < stringList.size() - 1) {
-                ChuoiGhepLai += ",";
+                text += ",";
             }
 
         }
-        return ChuoiGhepLai;
+        return text;
     }
 
-    private List<String> ListCacTuTrongChuoi(String Chuoi) {
-        List<String> cacchuois = new ArrayList<>();
-        String[] cacchuoi = Chuoi.split(",");
+    private List<String> getListTextFromInPutText(String inputText) {
+        List<String> listText = new ArrayList<>();
+        String[] cacchuoi = inputText.split(",");
         for (int i = 0; i < cacchuoi.length; i++) {
-            cacchuois.add(cacchuoi[i].toString());
+            listText.add(cacchuoi[i].toString());
         }
-        return cacchuois;
+        return listText;
     }
 
-    private void Bai5String(String raw, String from, String to) {
+    private void replaceText(String raw, String from, String to) {
         String Result = raw;
         for (int i = 0; i <= Result.length() - from.length(); i++) {
             if (from.equals(Result.substring(i, i + from.length()))) {
@@ -303,21 +290,13 @@ public class MainActivity extends AppCompatActivity {
         Log.d("BAI5-String", Result);
     }
 
-    private void XuatCacBillTrungNgay(HashMap<String, List<Bill>> hashMap, String Ngay) {
-        List<Bill> cacbilltrungngay = new ArrayList<>();
-        cacbilltrungngay.addAll(hashMap.get(Ngay));
 
-        for (int i = 0; i < cacbilltrungngay.size(); i++) {
-            Log.d("BAI7", cacbilltrungngay.get(i).getName());
-            Log.d("BAI7", cacbilltrungngay.get(i).getDate());
-        }
-    }
 
-    private Date ChuyenStringVeDangJaVaDate(String Chuoi) {
+    private Date covertStringToDate(String inputDate) {
 
         Date date = null;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(Chuoi);
+            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(inputDate);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -325,10 +304,10 @@ public class MainActivity extends AppCompatActivity {
         return date;
     }
 
-    private String NgayDauTienCuaThang(String Chuoi) {
+    private String getFisrtDayOfMonth(String inputDate) {
         Date date = null;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(Chuoi);
+            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(inputDate);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -339,17 +318,17 @@ public class MainActivity extends AppCompatActivity {
 
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-        Date date1 = calendar.getTime();
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
-        String NgayDauTienCuaThang = format1.format(date1);
+         date = calendar.getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        String fistDayOfMonth = simpleDateFormat.format(date);
 
-        return NgayDauTienCuaThang;
+        return fistDayOfMonth;
     }
 
-    private String NgayCuoiCungCuaThang(String Chuoi) {
+    private String getLastDayOfMonth(String inputDate) {
         Date date = null;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(Chuoi);
+            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(inputDate);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -358,153 +337,259 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
-        String NgaycuoicungCuaThang;
+        String lastDayOfMonth;
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.add(Calendar.MONTH, 1);
         calendar.add(Calendar.DAY_OF_MONTH, -1);
 
-        Date date1 ;
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
-        date1 = calendar.getTime();
-        NgaycuoicungCuaThang = format1.format(date1);
-        return NgaycuoicungCuaThang;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        date = calendar.getTime();
+        lastDayOfMonth = simpleDateFormat.format(date);
+        return lastDayOfMonth;
     }
-    private String MotTramNgaySau(String Chuoi)
-    {
+
+    private String numberDayLater(String inputDate, int number) {
         Date date = null;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(Chuoi);
+            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(inputDate);
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
-        calendar.add(Calendar.DAY_OF_MONTH, 100);
-        Date date1 ;
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
-        date1 = calendar.getTime();
-        String mottramngaysau = format1.format(date1);
+        calendar.add(Calendar.DAY_OF_MONTH, number);
 
-        return mottramngaysau;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        date = calendar.getTime();
+        String Result = simpleDateFormat.format(date);
+        return Result;
     }
-    private String SoSanhNgay (String a,String b)
-    {
-        String ketqua = "";
+
+    private String compareDate(String inputDateA, String inputDateB) {
+        String result = "";
 
         Date datea = null;
         Date dateb = null;
         try {
-            datea = new SimpleDateFormat("yyyy-MM-dd").parse(a);
-            dateb = new SimpleDateFormat("yyyy-MM-dd").parse(b);
+            datea = new SimpleDateFormat("yyyy-MM-dd").parse(inputDateA);
+            dateb = new SimpleDateFormat("yyyy-MM-dd").parse(inputDateB);
 
             if (datea.compareTo(dateb) > 0) {
-              ketqua = "Ngay " + a + " lon hon ngay " + b ;
+                result =  inputDateB + " bigger than   " + inputDateB;
             } else if (datea.compareTo(dateb) == 0) {
-                ketqua = "Ngay " + a + " bang ngay " + b ;
+                result = "Ngay " + inputDateB + " equal " + inputDateB;
             } else {
-                ketqua = "Ngay " + a + " nho hon ngay " + b ;
+                result = "Ngay " + inputDateB + " smaller than " + inputDateB;
             }
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return ketqua;
+        return result;
     }
-    public void CountNgay(String a,String b)
-    {
+
+    public void countDay(String inputDateA, String inputDateB) {
 
         Date datea = null;
         Date dateb = null;
         try {
-            datea = new SimpleDateFormat("yyyy-MM-dd").parse(a);
-            dateb = new SimpleDateFormat("yyyy-MM-dd").parse(b);
+            datea = new SimpleDateFormat("yyyy-MM-dd").parse(inputDateA);
+            dateb = new SimpleDateFormat("yyyy-MM-dd").parse(inputDateB);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         long ONE_DAY = 1000 * 60 * 60 * 24;
 
         long difference_ms = Math.abs(datea.getTime() - dateb.getTime());
-        Log.d("BAI4-Date", "so ngay giua "+a +" va "+ b +":" + Math.round(difference_ms / ONE_DAY));
+        Log.d("BAI4-Date", "day between  " + inputDateA + " and " + inputDateB + ":" + Math.round(difference_ms / ONE_DAY));
 
     }
-    public void CountThang(String a,String b)
-    {
+
+    public void countMonth(String inputDateA, String inoutDateB) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             long monthsBetween = ChronoUnit.MONTHS.between(
-                    LocalDate.parse(a).withDayOfMonth(1),
-                    LocalDate.parse(b).withDayOfMonth(1));
-            Log.d("BAI4-Date", "so thang giua "+a +" va" + b + " la: " + monthsBetween);
+                    LocalDate.parse(inputDateA).withDayOfMonth(1),
+                    LocalDate.parse(inoutDateB).withDayOfMonth(1));
+            Log.d("BAI4-Date", "month between  " + inputDateA + " and" + inoutDateB + " : " + monthsBetween);
         }
     }
-public void CountNam(String a,String b)
-{
-    long yearsBetween = 0;
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-        yearsBetween = ChronoUnit.YEARS.between(
-                LocalDate.parse(a),
-                LocalDate.parse(b));
-        Log.d("BAI4-Date", "so nam giua " + a + " va " + b + " la: " + yearsBetween);
-    }
-}
-public void ChuyenStringVeTimestamp (String Chuoi)
-{
 
-    Date datebai5 = null;
-    long timestamp = 0;
-    try {
-        datebai5 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(Chuoi);
-        Log.d("BAI5-Date", datebai5.toString());
-        Calendar calendar5 = Calendar.getInstance();
-        calendar5.setTime(datebai5);
-        timestamp = calendar5.getTimeInMillis();
-        Log.d("BAI5-Date", "timestamp la :" + timestamp);
-    } catch (ParseException ex) {
-        ex.printStackTrace();
+    public void countYear(String inputDateA, String inputDateB) {
+        long yearsBetween = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            yearsBetween = ChronoUnit.YEARS.between(
+                    LocalDate.parse(inputDateA),
+                    LocalDate.parse(inputDateB));
+            Log.d("BAI4-Date", "year between  " + inputDateA + " and " + inputDateB + " : " + yearsBetween);
+        }
     }
 
-    datebai5 = new Date(timestamp);
-    SimpleDateFormat format5 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    String ngaytutimestamp = format5.format(datebai5);
-    Log.d("BAI5-Date", "ngay tu timestamp la :" + ngaytutimestamp);
-}
-public void ChuyenStringVeTimestampVaLamTron(String Chuoi)
-{
+    public void covertToTimestamp(String inputDate) {
 
-    Date datebai6 = null;
-    long timestamp6 = 0;
-    try {
-        datebai6 = new SimpleDateFormat("yyyy/MM/dd HH:mm").parse(Chuoi);
-        Log.d("BAI6-Date", datebai6.toString());
-        Calendar calendar6 = Calendar.getInstance();
-        calendar6.setTime(datebai6);
-        timestamp6 = calendar6.getTimeInMillis();
-        Log.d("BAI6-Date", "timestamp la :" + timestamp6);
-    } catch (ParseException ex) {
-        ex.printStackTrace();
+        Date date = null;
+        long timestamp = 0;
+        try {
+            date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(inputDate);
+            Log.d("BAI5-Date", date.toString());
+            Calendar calendar5 = Calendar.getInstance();
+            calendar5.setTime(date);
+            timestamp = calendar5.getTimeInMillis();
+            Log.d("BAI5-Date", "timestamp: " + timestamp);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        date = new Date(timestamp);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String dateFromTimestamp = simpleDateFormat.format(date);
+        Log.d("BAI5-Date", "date from timestamp is :" + dateFromTimestamp);
     }
 
-    datebai6 = new Date(timestamp6);
-    SimpleDateFormat format6 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-    String ngaytutimestamp6 = format6.format(datebai6);
-    Log.d("BAI6-Date", "ngay tu timestamp la :" + ngaytutimestamp6);
-}
-private void ChuyenDinhDangDate(String Chuoi)
-{
+    public void convertToTimestampRoundToMinutes(String inputDate) {
 
-    Date datebai7;
-    try {
-        datebai7 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(Chuoi);
-        SimpleDateFormat format7 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat format7khac = new SimpleDateFormat("MMM yyyy,dd HH:mm:ss");
-        String dinhdangngaykhac = format7.format(datebai7);
-        String dinhdangngaykhac1 = format7khac.format(datebai7);
-        Log.d("BAI7-Date", dinhdangngaykhac);
-        Log.d("BAI7-Date", dinhdangngaykhac1);
-    } catch (ParseException e) {
-        e.printStackTrace();
+        Date date = null;
+        long timestamp = 0;
+        try {
+            date = new SimpleDateFormat("yyyy/MM/dd HH:mm").parse(inputDate);
+            Log.d("BAI6-Date", date.toString());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            timestamp = calendar.getTimeInMillis();
+            Log.d("BAI6-Date", "timestamp :" + timestamp);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        date = new Date(timestamp);
+        SimpleDateFormat format6 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String dateFromTimeStamp = format6.format(date);
+        Log.d("BAI6-Date", "date from timestamp :" + dateFromTimeStamp);
     }
-}
+
+        private void covertFormatDate(String inputDate) {
+
+        Date date;
+        try {
+            date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(inputDate);
+            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("MMM yyyy,dd HH:mm:ss");
+            String otherFormat1 = simpleDateFormat1.format(date);
+            String otherFormat2 = simpleDateFormat2.format(date);
+            Log.d("BAI7-Date", otherFormat1);
+            Log.d("BAI7-Date", otherFormat2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sumFrom0toN(int Number) {
+        int Result = 0;
+        for (int i = 0; i <= Number; i++) {
+            Result += i;
+        }
+        Log.d("BAI1", "Sum :" + Result + "");
+    }
+
+    public void sortAscending(List<Integer> ListNumber) {
+        Collections.sort(ListNumber, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                if (o1 < o2) {
+                    return -1;
+                } else {
+                    if (o1 == o2) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                }
+            }
+        });
+
+    }
+
+    public void moneySortAscending(List<Bill> billList) {
+        Collections.sort(billList, new Comparator<Bill>() {
+            @Override
+            public int compare(Bill o1, Bill o2) {
+                if (o1.getMoney() > o2.getMoney()) {
+                    return 1;
+                } else {
+                    if (o1.getMoney() == o2.getMoney()) {
+                        return 0;
+                    } else {
+                        return -1;
+                    }
+                }
+            }
+        });
+    }
+    public List<String> getListDistinctDateBill(List<Bill> billList) {
+        List<String> listDistinctDateBill = new ArrayList<>();
+        for (int i = 0; i < billList.size(); i++) {
+            int dem = 0;
+            for (int j = i - 1; j >= 0; j--) {
+                if (billList.get(i).getDate().equals(billList.get(j).getDate()) == true) {
+                    dem++;
+                }
+            }
+            if (dem == 0) {
+                listDistinctDateBill.add(billList.get(i).getDate());
+            }
+        }
+        return listDistinctDateBill;
+    }
+
+    public List<Bill> getListBillMoneyGreaterThanNumber (List<Bill> billList,int Number)
+    {
+        List<Bill> listBillMoneyGreaterThanNumber = new ArrayList<>();
+        for (int i = 0; i < billList.size(); i++) {
+            if (billList.get(i).getMoney() > Number) {
+                listBillMoneyGreaterThanNumber.add(billList.get(i));
+            }
+        }
+        return listBillMoneyGreaterThanNumber;
+    }
+    public HashMap<String,List<Bill>> inputListBillSameDay (List<Bill> billList)
+    {
+        HashMap<String, List<Bill>> hashMap = new HashMap<>();
+        for(int i =billList.size()-1;i >=0;i--)
+        {
+
+            List<Bill> cacbilltrungngays = new ArrayList<>();
+            for(int j=i;j<billList.size();j++)
+            {
+                if(billList.get(i).getDate().equals(billList.get(j).getDate()))
+                {
+                    cacbilltrungngays.add(billList.get(j));
+                }
+            }
+            hashMap.put(billList.get(i).getDate(),cacbilltrungngays);
+        }
+        return hashMap;
+    }
+    private void getListBillSameDay(HashMap<String, List<Bill>> hashMap, String Date) {
+        List<Bill> listBillSameDay = new ArrayList<>();
+        listBillSameDay.addAll(hashMap.get(Date));
+
+        for (int i = 0; i < listBillSameDay.size(); i++) {
+            Log.d("BAI7", listBillSameDay.get(i).getName());
+            Log.d("BAI7", listBillSameDay.get(i).getDate());
+        }
+    }
+    public List<Bill> getListBillDistinctIDAndName (List<Bill> billList)
+    {
+
+        Set<Bill> billHashSet= new HashSet<>();
+        for(int i=0;i<billList.size();i++)
+        {
+            billHashSet.add(billList.get(i));
+        }
+        List<Bill> listBillDistinctIDAndName= new ArrayList<>(billHashSet);
+
+        return listBillDistinctIDAndName;
+    }
+
 }
