@@ -53,13 +53,14 @@ public class MainActivity extends AppCompatActivity {
         listNumber.add(15);
         listNumber.add(20);
 
-        billList.add(new Bill(0, "muaxe", 10000, "2019-9-11"));
-        billList.add(new Bill(1, "muanha", 90000, "2019-3-10"));
-        billList.add(new Bill(2, "muadoan", 2000000, "2018-4-11"));
-        billList.add(new Bill(3, "muathucuong", 15022200, "2019-9-11"));
-        billList.add(new Bill(4, "mualinhtinh", 2000, "2019-5-5"));
-        billList.add(new Bill(4, "mualinhtinh", 20000, "2019-5-6"));
-        billList.add(new Bill(4, "xxx", 20000, "2019-5-6"));
+        billList.add(new Bill(0, "muaxe", 10000, "2019-90-11"));
+        billList.add(new Bill(1, "muanha", 90000, "2019-03-10"));
+        billList.add(new Bill(2, "muadoan", 2000000, "2018-04-11"));
+        billList.add(new Bill(3, "muathucuong", 15022200, "2019-09-11"));
+        billList.add(new Bill(4, "mualinhtinh", 2000, "2019-05-05"));
+        billList.add(new Bill(4, "mualinhtinh", 20000, "2019-05-06"));
+        billList.add(new Bill(4, "xxx", 20000, "2019-05-06"));
+        billList.add(new Bill(4, "aaa", 20000, "2019-05-06"));
 
 //bai1
         sumFrom0toN(20);
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 //bai5
         Log.d("BAI5", "bills >  1000000 :");
         List<Bill> listBillMoneyGreaterThanNumber = new ArrayList<>();
-        listBillMoneyGreaterThanNumber = getListBillMoneyGreaterThanNumber(billList,1000000);
+        listBillMoneyGreaterThanNumber = getListBillMoneyGreaterThanNumber(billList, 1000000);
 
         for (int i = 0; i < listBillMoneyGreaterThanNumber.size(); i++) {
             Log.d("BAI5", listBillMoneyGreaterThanNumber.get(i).getName());
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         hashMap = inputListBillSameDay(billList);
 
 //bai 7
-        getListBillSameDay(hashMap, "2019-5-6");
+        getListBillSameDay(hashMap, "2019-05-06");
 //bai 8
 
         List<Bill> listBillDistinctIDAndName = new ArrayList<>();
@@ -127,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
         List<String> listTexts = new ArrayList<>();
         listTexts = getListTextFromInPutText(textCombined);
 
-        for (int i = 0; i < listTexts.size(); i++) {
-            Log.d("BAI4-String", listTexts.get(i).toString() + "");
+        for (String text : listTexts) {
+            Log.d("BAI4-String", text.toString() + "");
         }
 //bai 5
         replaceText("I am fresher ,rightttt, yep , fresher la fresher hay la senior ?", "fresher", "senior");
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("BAI2-Date", "Last day of month : " + lastDayofMonth);
 
-        String oneHundredDayLater = numberDayLater(c,100);
+        String oneHundredDayLater = numberDayLater(c, 100);
 
         Log.d("BAI2-Date", "100 days later : " + oneHundredDayLater);
 
@@ -199,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("BAI1-String", "position Appear fisrt:" + positionAppearsFirst);
             Log.d("BAI1-String", "position Appear last:" + positionAppearsLast);
         } else {
-            Log.d("BAI1-String", "no Appear in Text" );
+            Log.d("BAI1-String", "no Appear in Text");
         }
 
     }
@@ -208,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
 
         int mostAppear = 0;
         for (int i = 0; i < inputText.length(); i++) {
-            int count =0;
+            int count = 0;
             for (int j = i; j < inputText.length(); j++) {
                 if (inputText.charAt(i) == inputText.charAt(j)) {
                     count++;
@@ -230,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("BAI2-String", "Most characters appear in the text : " + inputText.charAt(i));
             }
         }
-            List<String> subText = new ArrayList<>();
+        List<String> subText = new ArrayList<>();
         for (int i = 0; i < inputText.length(); i++) {
             for (int j = i; j <= inputText.length(); j++) {
                 if (inputText.substring(i, j).equals(inputText) == false) {
@@ -291,7 +292,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private Date covertStringToDate(String inputDate) {
 
         Date date = null;
@@ -318,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
 
         calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-         date = calendar.getTime();
+        date = calendar.getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
         String fistDayOfMonth = simpleDateFormat.format(date);
 
@@ -377,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
             dateb = new SimpleDateFormat("yyyy-MM-dd").parse(inputDateB);
 
             if (datea.compareTo(dateb) > 0) {
-                result =  inputDateB + " bigger than   " + inputDateB;
+                result = inputDateB + " bigger than   " + inputDateB;
             } else if (datea.compareTo(dateb) == 0) {
                 result = "Ngay " + inputDateB + " equal " + inputDateB;
             } else {
@@ -468,7 +468,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("BAI6-Date", "date from timestamp :" + dateFromTimeStamp);
     }
 
-        private void covertFormatDate(String inputDate) {
+    private void covertFormatDate(String inputDate) {
 
         Date date;
         try {
@@ -526,6 +526,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     public List<String> getListDistinctDateBill(List<Bill> billList) {
         List<String> listDistinctDateBill = new ArrayList<>();
         for (int i = 0; i < billList.size(); i++) {
@@ -542,8 +543,7 @@ public class MainActivity extends AppCompatActivity {
         return listDistinctDateBill;
     }
 
-    public List<Bill> getListBillMoneyGreaterThanNumber (List<Bill> billList,int Number)
-    {
+    public List<Bill> getListBillMoneyGreaterThanNumber(List<Bill> billList, int Number) {
         List<Bill> listBillMoneyGreaterThanNumber = new ArrayList<>();
         for (int i = 0; i < billList.size(); i++) {
             if (billList.get(i).getMoney() > Number) {
@@ -552,24 +552,21 @@ public class MainActivity extends AppCompatActivity {
         }
         return listBillMoneyGreaterThanNumber;
     }
-    public HashMap<String,List<Bill>> inputListBillSameDay (List<Bill> billList)
-    {
-        HashMap<String, List<Bill>> hashMap = new HashMap<>();
-        for(int i =billList.size()-1;i >=0;i--)
-        {
 
-            List<Bill> cacbilltrungngays = new ArrayList<>();
-            for(int j=i;j<billList.size();j++)
-            {
-                if(billList.get(i).getDate().equals(billList.get(j).getDate()))
-                {
-                    cacbilltrungngays.add(billList.get(j));
-                }
+    public HashMap<String, List<Bill>> inputListBillSameDay(List<Bill> billList) {
+        HashMap<String, List<Bill>> listHashMap = new HashMap<>();
+
+        for (Bill bill : billList) {
+            List<Bill> listBillSameDays = new ArrayList<>();
+            listBillSameDays.add(bill);
+            if (listHashMap.containsKey(bill.getDate()) == true) {
+                listBillSameDays.addAll(listHashMap.get(bill.getDate()));
             }
-            hashMap.put(billList.get(i).getDate(),cacbilltrungngays);
+            listHashMap.put(bill.getDate(), listBillSameDays);
         }
-        return hashMap;
+        return listHashMap;
     }
+
     private void getListBillSameDay(HashMap<String, List<Bill>> hashMap, String Date) {
         List<Bill> listBillSameDay = new ArrayList<>();
         listBillSameDay.addAll(hashMap.get(Date));
@@ -579,15 +576,14 @@ public class MainActivity extends AppCompatActivity {
             Log.d("BAI7", listBillSameDay.get(i).getDate());
         }
     }
-    public List<Bill> getListBillDistinctIDAndName (List<Bill> billList)
-    {
 
-        Set<Bill> billHashSet= new HashSet<>();
-        for(int i=0;i<billList.size();i++)
-        {
+    public List<Bill> getListBillDistinctIDAndName(List<Bill> billList) {
+
+        Set<Bill> billHashSet = new HashSet<>();
+        for (int i = 0; i < billList.size(); i++) {
             billHashSet.add(billList.get(i));
         }
-        List<Bill> listBillDistinctIDAndName= new ArrayList<>(billHashSet);
+        List<Bill> listBillDistinctIDAndName = new ArrayList<>(billHashSet);
 
         return listBillDistinctIDAndName;
     }
